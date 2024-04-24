@@ -1,0 +1,47 @@
+# none extra datetime
+RFR rmse: 5.942254065989919 
+
+LnReg rmse: 5.575953496105961
+
+KNN rmse: 6.317960878521029 
+
+# extra datetime
+RFR rmse: 2.161696552764624 
+
+LnReg rmse: 5.321668121023327
+
+KNN rmse: 3.476790712244491
+
+
+
+
+TEST 2
+## tavg
+# by day
+RFR rmse: 3.11931160363158 
+
+LnReg rmse: 5.392203398623651 
+
+KNN rmse: 3.326447061882425 
+
+# by month
+RFR rmse: 2.203867392968644 
+
+LnReg rmse: 5.437909952948228
+
+KNN rmse: 3.557892107383212
+
+## wspd
+# by day
+RFR rmse: 6.127717497594748 
+
+LnReg rmse: 5.887782757157585 
+
+KNN rmse: 6.568227254480013
+
+# by month
+RFR rmse: 5.2328387667761245 
+
+LnReg rmse: 6.021381616568543
+
+KNN rmse: 6.617534610306658

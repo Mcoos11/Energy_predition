@@ -1,0 +1,16 @@
+# output files
+after-predictions
+after-prediction.csv
+
+# datasets
+datasets
+test_data
+
+# data
+data
+
+# models
+models
+
+# env
+ML_sklearn
