@@ -10,6 +10,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
 
+import warnings
+warnings.filterwarnings("ignore")
+
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # models fun
@@ -49,7 +52,10 @@ def restore_data(df: pd.DataFrame):
         except KeyError:
             continue
         group_imputing.fit(current_month[["energy(kWh/hh)"]])
-        current_month[["energy(kWh/hh)"]] = group_imputing.transform(current_month[["energy(kWh/hh)"]])
+        try:
+            current_month[["energy(kWh/hh)"]] = group_imputing.transform(current_month[["energy(kWh/hh)"]])
+        except ValueError:
+            current_month[["energy(kWh/hh)"]] = current_month[["energy(kWh/hh)"]].fillna(0)
         out = pd.concat([out, current_month], axis=0)
 
     return out
@@ -66,7 +72,10 @@ def main(cities):
         X = input_data[features]
 
         # training data
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+        try:
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+        except ValueError:
+            continue
 
         # saving test data
         X_path = os.path.join(DIR_PATH, "test_data", f'X_{city}_test.csv')

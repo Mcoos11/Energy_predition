@@ -3,6 +3,8 @@ import pandas as pd
 import joblib, os
 import numpy as np
 import multiprocessing as mp
+import warnings
+warnings.filterwarnings("ignore")
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -28,7 +30,11 @@ def KNN(X, y=None, city=None):
     scaler = joblib.load(file_path)
     X = scaler.transform(X)
     # predictions
-    KNN_predictions = loaded_model.predict(X)
+    try:
+        KNN_predictions = loaded_model.predict(X)
+    except ValueError:
+        print(city)
+        return -1, -1
 
     if y is not None:
         return KNN_predictions, mean_squared_error(y, KNN_predictions, squared=False)

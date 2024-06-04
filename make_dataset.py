@@ -4,7 +4,7 @@ import numpy as np
 import os
 import multiprocessing as mp
 
-DATA_DIR_PATH = './data/'
+DATA_DIR_PATH = os.path.join(os.path.realpath(os.path.dirname(__file__)), 'data')
 
 def prapare_datasets(input_data, df_headers, return_dict, procnum):
     print(f'proc {procnum} - start')
@@ -26,7 +26,7 @@ def prapare_datasets(input_data, df_headers, return_dict, procnum):
 
 def save_dataset(datasets, data):
     for dataset in datasets:
-        data.loc[data["LCLid"] == dataset].to_csv(f'./datasets/{dataset}.csv', sep=';', encoding="utf-8", mode="a", index=False)
+        data.loc[data["LCLid"] == dataset].to_csv(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'datasets', f'{dataset}.csv'), sep=';', encoding="utf-8", mode="a", index=False)
 
 if __name__ == '__main__':           
     mp.freeze_support()
