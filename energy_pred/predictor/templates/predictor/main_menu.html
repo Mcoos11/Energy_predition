@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gospodarstwa domowe{% endblock title %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href={% static 'predictor/style.css' %}>
+{% endblock stylesheets %}
+
+{% block scripts %}
+    <script src="{% static 'predictor/main.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block content %}
+    <h1>Main Menu</h1>
+    {% for hause, energy in data.items %}
+    <div class="d-flex">
+        <b>{{hause}}</b>
+        <span>{{energy}} kWh</span>
+        <a href="{% url 'predictor:details' hause %}" class="btn btn-primary">szczegóły</a>
+    </div> 
+    {% endfor %}
+    <!-- Pagination -->
+    <nav class="pagination-nav" aria-label="Nawigacja podstron">
+        {% if object_list.has_other_pages %}
+        <ul class="pagination">
+            {% if object_list.has_previous %}
+            <li class="page-item"><a href="?page=1{% if searchText is not None %}&search_text={{searchText}}{% endif %}" class="page-link">Początek</a></li>
+            <li class="page-item"><a href="?page={{object_list.previous_page_number}}{% if searchText is not None %}&search_text={{searchText}}{% endif %}" class="page-link"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+            <li class="page-item disabled"></li>
+            {% endif %}
+        
+            {% for i in object_list.paginator.page_range %}
+            {% if object_list.number == i %}
+            <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only"></span></span></li>
+            {% else %}
+            <li class="page-item"><a href="?page={{i}}{% if searchText is not None %}&search_text={{searchText}}{% endif %}" class="page-link">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+        
+            {% if object_list.has_next %}
+            <li class="page-item"><a href="?page={{object_list.next_page_number}}{% if searchText is not None %}&search_text={{searchText}}{% endif %}" class="page-link"><span aria-hidden="true">&raquo;</span></a></li>
+            <li class="page-item"><a href="?page={{object_list.paginator.num_pages}}{% if searchText is not None %}&search_text={{searchText}}{% endif %}" class="page-link">Koniec</a></li>
+            {% else %}
+            <li class="page-item disabled"></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </nav>
+
+{% endblock content %}

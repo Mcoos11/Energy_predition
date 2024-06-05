@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gospodarstwa domowe{% endblock title %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href={% static 'predictor/style.css' %}>
+{% endblock stylesheets %}
+
+{% block scripts %}
+    <script src="{% static 'predictor/main.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block content %}
+    <h1>{{hause}} Szczegóły</h1>
+    <div>Ostatnie 2 dni {{last_days}}</div>
+    <div>Następne 2 dni {{next_days}}</div>
+    
+
+{% endblock content %}

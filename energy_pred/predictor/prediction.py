@@ -5,6 +5,7 @@ import numpy as np
 import multiprocessing as mp
 import warnings
 warnings.filterwarnings("ignore")
+from datetime import datetime
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -39,7 +40,7 @@ def KNN(X, y=None, city=None):
     if y is not None:
         return KNN_predictions, mean_squared_error(y, KNN_predictions, squared=False)
     else:
-        KNN_predictions
+        return KNN_predictions
 
 def main(cities):
     for city in cities:
@@ -58,7 +59,7 @@ def main(cities):
         RFR_predictions, RFR_rmse = RFR(X_test, y_test, city)
         print(f'RFR {city} rmse:', RFR_rmse)
 
-
+        print(X_test)
         KNN_predictions, KNN_rmse = KNN(X_test, y_test,city)
         print(f'KNN {city} rmse:', KNN_rmse)
         
@@ -70,6 +71,24 @@ def main(cities):
         df_out = pd.concat([df_out, df_tmp], axis=1)
             
         df_out.to_csv(f'after-predictions/{city}-after-prediction.csv', sep=';', index=False, encoding='utf-8')
+        
+def time_prediction(timestamp, hause):
+    X_data = pd.DataFrame([[timestamp]], columns=['timestamp'])
+    features = ["dayofyear", "month", "weekofyear", "quarter", "year", "day", "weekday", "hour", "minute"]
+    X_data[features] = pd.to_datetime(X_data['timestamp']).apply(
+        lambda row: pd.Series({
+            "dayofyear":row.dayofyear, 
+            "month":row.month, 
+            "weekofyear":row.weekofyear, 
+            "quarter":row.quarter, "year":row.year, 
+            "day":row.day, "weekday":row.weekday(), 
+            "hour":row.hour, 
+            "minute":row.minute 
+            }))
+    X_data = X_data.drop('timestamp', axis=1)
+    value = (KNN(X_data, city=hause)[0] + RFR(X_data, city=hause)[0]) / 2
+    return value[0]
+    
         
 if __name__ == '__main__':
     pd.options.mode.chained_assignment = None

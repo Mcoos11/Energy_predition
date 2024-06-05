@@ -14,3 +14,9 @@ models
 
 # env
 ML_sklearn
+
+# database
+db.sqlite3
+
+# migrations
+migrations
