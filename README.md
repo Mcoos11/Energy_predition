@@ -6,3 +6,5 @@
 
 <b>UWAGA</b>
 Danych jest dość sporo. Na razie ustawione jest (make_datasets.py:35) aby predykcja była tylko dla 50 gospodarstw tj. tylko z pliku block_0.csv. Przy takiej liczbie gospodarstw to i tak chwilę trwa ale udało mi się przyspieszyć ten proces dodając multiprocessing. Warto też wrzucić to na jakiś szybki dysk SSD to dodatkowo przyspiesza bo jest dużo plików do odczytu i zapisu. U mnie całość z danymi, modelmi i wynikami waży 15,6GB.
+
+Źródło danych: https://www.kaggle.com/datasets/jeanmidev/smart-meters-in-london/data
